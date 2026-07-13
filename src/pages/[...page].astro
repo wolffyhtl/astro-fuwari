@@ -18,6 +18,24 @@ const len = page.data.length;
 ---
 
 <MainGridLayout>
+    <div class="transition flex flex-col rounded-[var(--radius-large)] bg-[var(--card-bg)] p-6 md:p-8 mb-4 onload-animation">
+        <h2 class="text-2xl font-bold mb-4">Welcome to Clina_sama Blog</h2>
+        <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+            This is a personal blog where I share my journey through software development, system administration,
+            and open-source contributions. You will find posts on Linux, self-hosting, programming in languages
+            such as Rust and TypeScript, and various tools and workflows I use daily.
+        </p>
+        <p class="text-[var(--text-secondary)] leading-relaxed mb-4">
+            I run my own infrastructure using Debian-based servers, Cloudflare Workers, and self-hosted services.
+            Topics include containerization with Docker, CI/CD pipelines, monitoring, automation, and security
+            hardening. I also write about my experiences contributing to open-source projects and maintaining
+            custom Astro and static-site setups.
+        </p>
+        <p class="text-[var(--text-secondary)] leading-relaxed">
+            Browse the posts below or use the search bar to find specific topics. Feel free to reach out via
+            XMPP or Matrix — links are in the sidebar.
+        </p>
+    </div>
     <PostPage page={page}></PostPage>
     <Pagination class="mx-auto onload-animation" page={page} style={`animation-delay: calc(var(--content-delay) + ${(len)*50}ms)`}></Pagination>
 </MainGridLayout>
