@@ -8,6 +8,8 @@ import swup from "@swup/astro";
 import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+import { unified } from "@astrojs/markdown-remark";
+process.setMaxListeners(20);
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import rehypeKatex from "rehype-katex";
@@ -32,14 +34,12 @@ export default defineConfig({
 	site: "https://clina.top/",
 	base: "/",
 	trailingSlash: "always",
+	compressHTML: true,
 	image: {
 		// 全局响应式布局
 		layout: "constrained",
 	},
-	experimental: {
-		// 队列渲染以优化性能（实验性）
-		queuedRendering: { enabled: true },
-	},
+
 	redirects: {
 		"/codeberg": {
 			status: 302,
@@ -133,61 +133,86 @@ export default defineConfig({
 		mdx(),
 	],
 	markdown: {
-		remarkPlugins: [
-			remarkMath,
-			remarkReadingTime,
-			remarkExcerpt,
-			remarkGithubAdmonitionsToDirectives,
-			remarkDirective,
-			remarkSectionize,
-			parseDirectiveNode,
-		],
-		rehypePlugins: [
-			rehypeKatex,
-			rehypeSlug,
-			[
-				rehypeComponents,
-				{
-					components: {
-						codeberg: CodebergCardComponent,
-						github: GithubCardComponent,
-						githubfile: GithubFileCardComponent,
-						note: (x, y) => AdmonitionComponent(x, y, "note"),
-						tip: (x, y) => AdmonitionComponent(x, y, "tip"),
-						important: (x, y) => AdmonitionComponent(x, y, "important"),
-						caution: (x, y) => AdmonitionComponent(x, y, "caution"),
-						warning: (x, y) => AdmonitionComponent(x, y, "warning"),
-					},
-				},
+		processor: unified({
+			remarkPlugins: [
+				remarkMath,
+				remarkReadingTime,
+				remarkExcerpt,
+				remarkGithubAdmonitionsToDirectives,
+				remarkDirective,
+				remarkSectionize,
+				parseDirectiveNode,
 			],
-			[
-				rehypeAutolinkHeadings,
-				{
-					behavior: "append",
-					properties: {
-						className: ["anchor"],
-					},
-					content: {
-						type: "element",
-						tagName: "span",
-						properties: {
-							className: ["anchor-icon"],
-							"data-pagefind-ignore": true,
+			rehypePlugins: [
+				rehypeKatex,
+				rehypeSlug,
+				[
+					rehypeComponents,
+					{
+						components: {
+							codeberg: CodebergCardComponent,
+							github: GithubCardComponent,
+							githubfile: GithubFileCardComponent,
+							note: (x, y) => AdmonitionComponent(x, y, "note"),
+							tip: (x, y) => AdmonitionComponent(x, y, "tip"),
+							important: (x, y) => AdmonitionComponent(x, y, "important"),
+							caution: (x, y) => AdmonitionComponent(x, y, "caution"),
+							warning: (x, y) => AdmonitionComponent(x, y, "warning"),
 						},
-						children: [
-							{
-								type: "text",
-								value: "#",
-							},
-						],
 					},
-				},
+				],
+				[
+					rehypeAutolinkHeadings,
+					{
+						behavior: "append",
+						properties: {
+							className: ["anchor"],
+						},
+						content: {
+							type: "element",
+							tagName: "span",
+							properties: {
+								className: ["anchor-icon"],
+								"data-pagefind-ignore": true,
+							},
+							children: [
+								{
+									type: "text",
+									value: "#",
+								},
+							],
+						},
+					},
+				],
 			],
-		],
+		}),
 	},
 	vite: {
 		plugins: [tailwindcss()],
+		optimizeDeps: {
+			include: [
+				"overlayscrollbars",
+				"overlayscrollbars/overlayscrollbars.css",
+				"photoswipe",
+				"photoswipe/lightbox",
+				"@swup/astro",
+				"@swup/astro/client/Swup",
+				"@swup/astro/client/SwupHeadPlugin",
+				"@swup/astro/client/SwupScrollPlugin",
+				"@swup/astro/client/SwupPreloadPlugin",
+				"@swup/astro/client/SwupScriptsPlugin",
+				"@swup/astro/client/SwupA11yPlugin",
+				"astro-seo",
+			],
+		},
+		server: {
+			watch: {
+				ignored: ["**/node_modules/**", "**/.git/**", "**/dist/**", "**/.astro/**", "**/pnpm-lock.yaml", "**/public/**"],
+			},
+		},
 		build: {
+			cssMinify: false,
+			cssCodeSplit: false,
 			rollupOptions: {
 				onwarn(warning, warn) {
 					// temporarily suppress this warning

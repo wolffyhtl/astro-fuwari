@@ -1,7 +1,11 @@
 @import url("https://fontsapi.zeoseven.com/292/main/result.css");
-
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
+
+@font-face {
+	font-family: "LXGW WenKai";
+	font-display: swap;
+}
 
 /* ========== CSS 变量定义 - 基于参考代码 ========== */
 :root {
