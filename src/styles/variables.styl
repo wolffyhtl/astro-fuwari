@@ -17,9 +17,12 @@ define(vars)
   :root
     for key, value in vars
       {key}: value[0]
-  --page-bg: oklch(0.95 0.01 var(--hue)) oklch(0.16 0.014 var(--hue))
-  --card-bg: white oklch(0.23 0.015 var(--hue))
+  :root.dark
+    for key, value in vars
+      if length(value) > 1
+        {key}: value[1]
 
+define({
   // AI Summary 相关变量
   --liushen-title-font-color: #0883b7 #0883b7
   --liushen-maskbg: rgba(255, 255, 255, 0.85) rgba(0, 0, 0, 0.85)
@@ -28,14 +31,6 @@ define(vars)
   --liushen-text: #4c4948 #ffffffb3
   --liushen-secondtext: #3c3c43cc #a1a2b8
 
-  --btn-content: oklch(0.55 0.12 var(--hue)) oklch(0.75 0.1 var(--hue))
-  --btn-regular-bg: oklch(0.95 0.025 var(--hue)) oklch(0.33 0.035 var(--hue))
-  :root.dark
-    for key, value in vars
-      if length(value) > 1
-        {key}: value[1]
-
-define({
   --primary: oklch(0.70 0.14 var(--hue)) oklch(0.75 0.14 var(--hue))
   --page-bg: oklch(0.95 0.01 var(--hue)) oklch(0.16 0.014 var(--hue))
   --card-bg: white oklch(0.23 0.015 var(--hue))

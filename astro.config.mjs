@@ -10,6 +10,16 @@ import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import { unified } from "@astrojs/markdown-remark";
 process.setMaxListeners(20);
+
+// Suppress a single cosmetic deprecation warning from Astro:
+// astro-expressive-code still injects its rehype plugin via the deprecated
+// `markdown.rehypePlugins` API (upstream issue). The plugin is still correctly
+// copied to the unified() processor by Astro's internal migration logic.
+const _origAstroWarn = console.warn;
+console.warn = (...args) => {
+	if (typeof args[0] === "string" && args[0].includes("markdown.remarkPlugins")) return;
+	_origAstroWarn(...args);
+};
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeComponents from "rehype-components"; /* Render the custom directive content */
 import rehypeKatex from "rehype-katex";
@@ -211,7 +221,6 @@ export default defineConfig({
 			},
 		},
 		build: {
-			cssMinify: false,
 			cssCodeSplit: false,
 			rollupOptions: {
 				onwarn(warning, warn) {
