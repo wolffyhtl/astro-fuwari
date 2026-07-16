@@ -36,7 +36,6 @@ export type SiteConfig = {
 	};
 
 	favicon: Favicon[];
-	officialSites?: (string | { url: string; alias: string })[];
 };
 
 export type Favicon = {
