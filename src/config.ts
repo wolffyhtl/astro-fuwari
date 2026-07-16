@@ -47,10 +47,6 @@ export const siteConfig: SiteConfig = {
 		//   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
 		// }
 	],
-	officialSites: [
-		{ url: "https://clina.top", alias: "Stable" },
-		{ url: "https://blog.150191.xyz", alias: "Develop" },
-	],
 };
 
 export const navBarConfig: NavBarConfig = {
