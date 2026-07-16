@@ -56,6 +56,11 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.About,
 		LinkPreset.Friends,
 	],
+  	{
+		name: "开往",
+		url: "https://www.travellings.cn/go.html", // Internal links should not include the base path, as it is automatically added
+		external: true, // Show an external link icon and will open in a new tab
+	},
 };
 
 export const profileConfig: ProfileConfig = {
