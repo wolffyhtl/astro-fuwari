@@ -3,7 +3,7 @@ import type { MarkdownHeading } from "astro";
 import Categories from "./Categories.astro";
 import Profile from "./Profile.astro";
 import Tag from "./Tags.astro";
-import DomainSwitcher from "./DomainSwitcher.astro";
+
 import UmamiStats from "./UmamiStats.astro";
 import Music from './Music.astro'
 import Sponsors from "./Sponsors.astro";
@@ -19,7 +19,6 @@ const className = Astro.props.class;
         <Profile></Profile>
     </div>
     <div id="sidebar-sticky" class="transition-all duration-700 flex flex-col w-full gap-4 top-4 sticky top-4">
-        <DomainSwitcher class="onload-animation" style="animation-delay: 150ms"></DomainSwitcher>
         <Categories class="onload-animation" style="animation-delay: 150ms"></Categories>
         <UmamiStats class="onload-animation" style="animation-delay: 200ms"></UmamiStats>
         <Tag class="onload-animation" style="animation-delay: 200ms"></Tag>
