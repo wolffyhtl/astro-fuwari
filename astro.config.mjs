@@ -45,6 +45,9 @@ export default defineConfig({
 	base: "/",
 	trailingSlash: "always",
 	compressHTML: true,
+	build: {
+		inlineStylesheets: "auto",
+	},
 	image: {
 		// 全局响应式布局
 		layout: "constrained",

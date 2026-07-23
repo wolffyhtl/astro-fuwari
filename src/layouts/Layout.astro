@@ -100,6 +100,7 @@ const bannerOffset =
 		<link rel="preconnect" href="https://umami.clina.top">
 		<link rel="preconnect" href="https://www.clarity.ms">
 		<link rel="preconnect" href="https://www.termsfeed.com">
+		<link rel="preconnect" href="https://cdn.jsdelivr.net">
 
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.44/dist/katex.min.css" media="print" onload="this.media='all'; this.onload=null">
 		<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.44/dist/katex.min.css"></noscript>
@@ -544,17 +545,11 @@ window.onresize = () => {
 </script>
 
 <script>
+import "photoswipe/dist/photoswipe.css"
 import PhotoSwipeLightbox from "photoswipe/lightbox"
 
 let lightbox: PhotoSwipeLightbox
 let pswpPromise = import("photoswipe")
-
-async function loadPhotoSwipeCSS() {
-	const link = document.createElement("link");
-	link.rel = "stylesheet";
-	link.href = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.min.css";
-	document.head.appendChild(link);
-}
 
 function createPhotoSwipe() {
 	lightbox = new PhotoSwipeLightbox({
@@ -589,7 +584,6 @@ function createPhotoSwipe() {
 
 const setup = () => {
 	if (!lightbox) {
-		loadPhotoSwipeCSS();
 		createPhotoSwipe()
 	}
 	window.swup.hooks.on("page:view", () => {
